@@ -5,39 +5,41 @@ import React, { useEffect, useState } from "react";
 
 function App() {
   
-  console.log('componente app ejecutado')
+  // useState se usa para declarar una variable de estado
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks');   // Obtener las tareas guardadas en `localStorage`.
+    return savedTasks ? JSON.parse(savedTasks) : [];    // Si existen, se parsean a un array, sino, se inicializa vacío.
+  });
 
-  //Devuelve variable en primer posicion, funcion en el segundo.  
-  const [tasks, setTasks] = useState([]); //TAREA: INICIALIZAR CON L.S.
-  
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    if (!event.target.elements.taskName.value) return;
+    const taskName = event.target.elements.taskName.value;
+    if (!taskName) return;
 
-    //TAREA: REEMPLAZAR EL STRING DEL VALUE POR UN OBJETO QUE CONTENGA
-    //EL STRING Y EL ESTADO FINALIZADO 
+    // Objeto de tarea con su nombre y un estado inicializado en `false`.
+    const newTask = { name: taskName, completed: false };
 
-    setTasks( [ ...tasks, event.target.elements.taskName.value] ); //EN LUGAR DEL EVENT, GUARDAR OBJETO
+    setTasks([...tasks, newTask]);
     event.target.elements.taskName.value = '';
-}
+  }
 
-  useEffect( () => {
-    console.log('UseEffect ejecutado', tasks)
+  useEffect(() => {
+    // Guarda el array de tareas en `localStorage` en formato JSON cada vez que `tasks` cambia.
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]); // useEffect solo se ejecuta cuando `tasks` cambia.
 
-    //DE TAREA VAMOS A AGREGAR EL GUARDADO EN EL LOCALSTORAGE
-
-    // return () => {
-    //   alert ('componente desmontado')
-    // };
-  }, [tasks]); //array es el conjunto de dependencia que queremos que tenga
 
   return (
     <>
-    <Container>
-      <Titulo text="ToDo-App" />
-      <Formulario onSubmitHandler={onSubmitHandler}/>
-      {JSON.stringify(tasks)}
-    </Container>
+      <Container>
+        <Titulo text="ToDo-App" />
+        <Formulario onSubmitHandler={onSubmitHandler} />
+        {tasks.map((task, index) => (
+          <div key={index}>
+            {task.name} - {task.completed ? "Completado" : "Pendiente"}
+          </div>
+        ))}
+      </Container>
     </>
   );
 };
