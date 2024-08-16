@@ -21,6 +21,7 @@ function App() {
     const newTask = { name: taskName, completed: false, id: Math.floor(Math.random() * 100000) };
 
     setTasks([...tasks, newTask]);
+
   }
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
       }
       return task;
     });
+    setTasks([...modifiedTask]);
   }
 
   return (

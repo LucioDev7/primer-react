@@ -6,6 +6,7 @@ function Formulario ({onSubmitHandler}){
     
     const onSubmitHandlerEvent = (event)=>{
         onSubmitHandler(event);
+        taskInput.current.value = '';
     }
 
     return(
