@@ -1,6 +1,7 @@
 import Container from "./components/Container";
 import Titulo from "./components/Titulo";
 import Formulario from "./components/Formulario";
+import Task from "./components/Task";
 import React, { useEffect, useState } from "react";
 
 function App() {
@@ -17,10 +18,9 @@ function App() {
     if (!taskName) return;
 
     // Objeto de tarea con su nombre y un estado inicializado en `false`.
-    const newTask = { name: taskName, completed: false };
+    const newTask = { name: taskName, completed: false, id: Math.floor(Math.random() * 100000) };
 
     setTasks([...tasks, newTask]);
-    event.target.elements.taskName.value = '';
   }
 
   useEffect(() => {
@@ -28,17 +28,25 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]); // useEffect solo se ejecuta cuando `tasks` cambia.
 
+  const toggleCompleted = (id) => {
+    const modifiedTask = tasks.map(task => {
+      if (task.id == id){
+        task.completed = !task.completed;
+      }
+      return task;
+    });
+  }
 
   return (
     <>
       <Container>
         <Titulo text="ToDo-App" />
         <Formulario onSubmitHandler={onSubmitHandler} />
-        {tasks.map((task, index) => (
-          <div key={index}>
-            {task.name} - {task.completed ? "Completado" : "Pendiente"}
-          </div>
-        ))}
+        <ul>
+          {
+          tasks.map((taskItem) => <Task key={taskItem.id} {...taskItem} onToggleHandler={toggleCompleted}/>)
+          }
+        </ul>
       </Container>
     </>
   );

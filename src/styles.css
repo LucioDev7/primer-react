@@ -6,7 +6,7 @@ body{
 }
 
 .container{
-    background: greenyellow;
+    background: burlywood;
     padding: 20px;
     border-radius: 10px;
     width: 450px;
@@ -19,7 +19,7 @@ body{
 .titulo{
     font-family:'Courier New', Courier, monospace;
     border-bottom: 2px solid #5555;
-    color: green;
+    color: brown;
     width: 100%;
     text-align: center;
     padding-bottom: 10px;
@@ -34,14 +34,62 @@ body{
     width: 100%;
     padding: 10px;
     border-radius: 10px 0px 0px 10px;
-    border: 1px solid greenyellow;
+    border: 1px solid brown;
 }
 
 .formulario button{
     appearance: none;
-    background-color: green;
+    background-color: brown;
     color: white;
     border: none;
     padding: 10px 25px;
     border-radius: 0px 5px 5px 0px;
+}
+
+
+/* Estilos generales para el contenedor de la lista de tareas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+/* Estilos para cada tarea */
+li {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #a7a3a3;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efecto al pasar el mouse sobre una tarea */
+li:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para una tarea completada */
+.task-item.completed {
+    background-color: #d4edda; /* Color verde claro para tareas completadas */
+    color: #155724; /* Color de texto verde oscuro para contraste */
+    text-decoration: line-through;
+    font-weight: 600;
+}
+
+/* Estilo del texto dentro de una tarea completada */
+.task-item.completed span {
+    text-decoration: line-through;
+    color: #6c757d; /* Color gris para el texto tachado */
+}
+
+/* Estilo del texto dentro de una tarea incompleta */
+.task-item.task-item.completed span {
+    color: #212529; /* Color del texto para tareas no completadas */
 }
